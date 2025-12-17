@@ -1,7 +1,7 @@
 {
   "name": "@vincent-hyu-uit/react-native-core-components",
-  "version": "0.3.0",
-  "description": "This is a list of core components and form components using react hook form",
+  "version": "0.3.1",
+  "description": "A lightweight React Native component library featuring pure, reusable UI components and form-ready components powered by React Hook Form, designed for consistent UX, high performance, and scalable form development.",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
@@ -9,6 +9,26 @@
       "source": "./src/index.tsx",
       "types": "./lib/typescript/src/index.d.ts",
       "default": "./lib/module/index.js"
+    },
+    "./components": {
+      "source": "./src/components/index.ts",
+      "types": "./lib/typescript/src/components/index.d.ts",
+      "default": "./lib/module/components/index.js"
+    },
+    "./components/form": {
+      "source": "./src/components/form/index.ts",
+      "types": "./lib/typescript/src/components/form/index.d.ts",
+      "default": "./lib/module/components/form/index.js"
+    },
+    "./theme": {
+      "source": "./src/theme/index.ts",
+      "types": "./lib/typescript/src/theme/index.d.ts",
+      "default": "./lib/module/theme/index.js"
+    },
+    "./utils": {
+      "source": "./src/utils/index.ts",
+      "types": "./lib/typescript/src/utils/index.d.ts",
+      "default": "./lib/module/utils/index.js"
     },
     "./package.json": "./package.json"
   },
