@@ -9,7 +9,7 @@ export { default as PasswordInput } from './components/pure/PasswordInput';
 export { default as RefreshControl } from './components/pure/RefreshControl';
 export { default as SearchInput } from './components/pure/SearchInput';
 export { default as TextInput } from './components/pure/TextInput';
-export { default as CTabs } from './components/pure/CTabs';
+export { default as Tabs } from './components/pure/Tabs';
 
 // Form Components
 export { FormField } from './components/form/FormField';

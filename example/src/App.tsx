@@ -8,7 +8,7 @@ import {
   PasswordInput,
   TextInput,
   SearchInput,
-  CTabs,
+  Tabs,
   FormField,
   FormCheckbox,
   FormNumberInput,
@@ -22,6 +22,7 @@ import { useForm } from 'react-hook-form';
 export default function App() {
   const [checked, setChecked] = useState(false);
   const { control } = useForm();
+  const [tabsValue, setTabsValue] = useState('tab1');
   return (
     <View style={styles.container}>
       <Avatar name="AAA" size={50} />
@@ -37,13 +38,14 @@ export default function App() {
 
       <TextInput />
       <SearchInput onSearch={(text) => console.log(text)} />
-      <CTabs
+      <Tabs
         tabs={[
           { label: 'Tab 1', value: 'tab1' },
           { label: 'Tab 2', value: 'tab2' },
+          { label: 'Tab 3', value: 'tab3' },
         ]}
-        value="tab1"
-        onChange={() => {}}
+        value={tabsValue}
+        onChange={setTabsValue}
       />
 
       <FormField name="name" control={control} label="Name" />

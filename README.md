@@ -217,16 +217,16 @@ import { Avatar } from '@vincent-hyu-uit/react-native-core-components';
 
 ---
 
-### CTabs
+### Tabs
 
 A tab selector component.
 
 ```tsx
-import { CTabs } from '@vincent-hyu-uit/react-native-core-components';
+import { Tabs } from '@vincent-hyu-uit/react-native-core-components';
 
 const [activeTab, setActiveTab] = useState('tab1');
 
-<CTabs
+<Tabs
   tabs={[
     { label: 'Overview', value: 'tab1' },
     { label: 'Details', value: 'tab2' },

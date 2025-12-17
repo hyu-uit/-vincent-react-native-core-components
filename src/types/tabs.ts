@@ -9,7 +9,7 @@ export interface TabItem<T = string> {
   disabled?: boolean;
 }
 
-export interface CTabsProps<T = string> {
+export interface TabsProps<T = string> {
   /** Array of tab items */
   tabs: TabItem<T>[];
   /** Currently selected tab value */
