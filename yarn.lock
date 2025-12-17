@@ -3549,7 +3549,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vincent-hyu-uit/react-native-core-components@workspace:.":
+"@vincent-hyu-uit/react-native-core-components@workspace:*, @vincent-hyu-uit/react-native-core-components@workspace:.":
   version: 0.0.0-use.local
   resolution: "@vincent-hyu-uit/react-native-core-components@workspace:."
   dependencies:
@@ -3605,7 +3605,9 @@ __metadata:
     "@react-native/metro-config": "npm:0.83.0"
     "@react-native/typescript-config": "npm:0.83.0"
     "@types/react": "npm:^19.2.0"
+    "@vincent-hyu-uit/react-native-core-components": "workspace:*"
     react: "npm:19.2.0"
+    react-hook-form: "npm:^7.68.0"
     react-native: "npm:0.83.0"
     react-native-builder-bob: "npm:^0.40.17"
     react-native-currency-input: "npm:^1.1.1"

@@ -10,7 +10,9 @@
     "build:ios": "react-native build-ios --mode Debug"
   },
   "dependencies": {
+    "@vincent-hyu-uit/react-native-core-components": "workspace:*",
     "react": "19.2.0",
+    "react-hook-form": "^7.68.0",
     "react-native": "0.83.0",
     "react-native-currency-input": "^1.1.1",
     "react-native-safe-area-context": "^5.6.2"

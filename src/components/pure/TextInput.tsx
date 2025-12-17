@@ -27,6 +27,8 @@ export const TextInput = React.forwardRef<any, TextInputProps>(
       value,
       placeholder,
       style,
+      onFocus,
+      onBlur,
       ...textInputProps
     },
     ref
@@ -66,16 +68,16 @@ export const TextInput = React.forwardRef<any, TextInputProps>(
           placeholder={placeholder}
           placeholderTextColor={placeholderTextColor}
           editable={!disabled}
+          {...textInputProps}
           onFocus={(e) => {
             setIsFocused(true);
-            textInputProps.onFocus?.(e);
+            onFocus?.(e);
           }}
           onBlur={(e) => {
             setIsFocused(false);
-            textInputProps.onBlur?.(e);
+            onBlur?.(e);
           }}
           style={[styles.input, style]}
-          {...textInputProps}
         />
 
         {/* Right Side: Suffix Text or Clear Button */}

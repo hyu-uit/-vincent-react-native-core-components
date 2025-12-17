@@ -15,7 +15,7 @@ import {
   FormPasswordField,
   FormSelect,
   FormTextarea,
-} from '@vincent/react-native-core-components';
+} from '@vincent-hyu-uit/react-native-core-components';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 

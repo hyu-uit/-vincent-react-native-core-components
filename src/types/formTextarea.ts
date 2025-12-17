@@ -25,6 +25,8 @@ export interface FormTextareaProps<T extends FieldValues> {
   height?: number;
   /** Maximum character length */
   maxLength?: number;
+  /** Border color when focused */
+  focusBorderColor?: string;
   /** Additional TextInput props */
   inputProps?: Partial<TextInputProps>;
   /** Container style */

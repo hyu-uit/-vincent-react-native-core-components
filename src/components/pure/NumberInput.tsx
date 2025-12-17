@@ -24,6 +24,8 @@ export const NumberInput = React.forwardRef<any, NumberInputProps>(
       disabled = false,
       placeholder,
       style,
+      onFocus,
+      onBlur,
       ...textInputProps
     },
     ref
@@ -57,18 +59,18 @@ export const NumberInput = React.forwardRef<any, NumberInputProps>(
           maxValue={maxValue}
           placeholder={placeholder}
           editable={!disabled}
+          keyboardType="numeric"
+          returnKeyType="done"
+          {...textInputProps}
           onFocus={(e: FocusEvent) => {
             setIsFocused(true);
-            textInputProps.onFocus?.(e);
+            onFocus?.(e);
           }}
           onBlur={(e: FocusEvent) => {
             setIsFocused(false);
-            textInputProps.onBlur?.(e);
+            onBlur?.(e);
           }}
-          keyboardType="numeric"
-          returnKeyType="done"
           style={[styles.input, style]}
-          {...textInputProps}
         />
       </View>
     );

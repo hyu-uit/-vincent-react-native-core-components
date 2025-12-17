@@ -5,6 +5,7 @@ export const FORM_TEXTAREA_COLORS = {
   required: COLORS.error,
   error: COLORS.error,
   border: COLORS.gray200,
+  borderFocused: COLORS.primary,
   borderError: COLORS.error,
   background: COLORS.white,
   backgroundDisabled: COLORS.gray100,

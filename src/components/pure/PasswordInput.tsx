@@ -25,6 +25,8 @@ export const PasswordInput = React.forwardRef<any, PasswordInputProps>(
       value,
       placeholder,
       style,
+      onFocus,
+      onBlur,
       ...textInputProps
     },
     ref
@@ -55,17 +57,17 @@ export const PasswordInput = React.forwardRef<any, PasswordInputProps>(
           placeholder={placeholder}
           placeholderTextColor={placeholderTextColor}
           editable={!disabled}
+          {...textInputProps}
           onFocus={(e: FocusEvent) => {
             setIsFocused(true);
-            textInputProps.onFocus?.(e);
+            onFocus?.(e);
           }}
           onBlur={(e: FocusEvent) => {
             setIsFocused(false);
-            textInputProps.onBlur?.(e);
+            onBlur?.(e);
           }}
           style={[styles.input, style]}
           secureTextEntry={secureTextEntry}
-          {...textInputProps}
         />
 
         <TouchableOpacity

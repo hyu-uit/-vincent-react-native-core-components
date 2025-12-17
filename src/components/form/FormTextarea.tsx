@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { Controller, type FieldValues } from 'react-hook-form';
 
@@ -16,6 +17,7 @@ export function FormTextarea<T extends FieldValues>({
   disabled,
   height = 140,
   maxLength,
+  focusBorderColor = FORM_TEXTAREA_COLORS.borderFocused,
   inputProps,
   containerStyle,
   labelStyle,
@@ -23,6 +25,8 @@ export function FormTextarea<T extends FieldValues>({
   inputStyle,
   errorStyle,
 }: FormTextareaProps<T>) {
+  const [isFocused, setIsFocused] = useState(false);
+
   return (
     <Controller
       control={control}
@@ -32,6 +36,18 @@ export function FormTextarea<T extends FieldValues>({
         fieldState: { error: fieldError },
       }) => {
         const errorMessage = error || fieldError?.message;
+
+        const getBorderColor = () => {
+          if (errorMessage) return FORM_TEXTAREA_COLORS.borderError;
+          if (isFocused && !disabled) return focusBorderColor;
+          return FORM_TEXTAREA_COLORS.border;
+        };
+
+        const {
+          onFocus: inputOnFocus,
+          onBlur: inputOnBlur,
+          ...restInputProps
+        } = inputProps || {};
 
         return (
           <View style={[styles.container, containerStyle]}>
@@ -46,9 +62,7 @@ export function FormTextarea<T extends FieldValues>({
                 styles.textarea,
                 {
                   height,
-                  borderColor: errorMessage
-                    ? FORM_TEXTAREA_COLORS.borderError
-                    : FORM_TEXTAREA_COLORS.border,
+                  borderColor: getBorderColor(),
                   backgroundColor: disabled
                     ? FORM_TEXTAREA_COLORS.backgroundDisabled
                     : FORM_TEXTAREA_COLORS.background,
@@ -62,12 +76,20 @@ export function FormTextarea<T extends FieldValues>({
                 placeholderTextColor={FORM_TEXTAREA_COLORS.placeholder}
                 value={value || ''}
                 onChangeText={onChange}
-                onBlur={onBlur}
                 multiline
                 editable={!disabled}
                 maxLength={maxLength}
+                {...restInputProps}
+                onFocus={(e) => {
+                  setIsFocused(true);
+                  inputOnFocus?.(e);
+                }}
+                onBlur={(e) => {
+                  setIsFocused(false);
+                  onBlur();
+                  inputOnBlur?.(e);
+                }}
                 style={[styles.input, inputStyle]}
-                {...inputProps}
               />
             </View>
             {errorMessage && (
