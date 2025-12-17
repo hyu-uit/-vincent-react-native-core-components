@@ -1,6 +1,6 @@
 {
   "name": "@vincent-hyu-uit/react-native-core-components",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "This is a list of core components and form components using react hook form",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",

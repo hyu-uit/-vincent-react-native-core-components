@@ -1,14 +1,17 @@
 import { COLORS } from './colors';
+import type { ThemeColors } from '../types/theme';
 
-export const FORM_SELECT_COLORS = {
-  label: COLORS.black,
-  required: COLORS.error,
-  error: COLORS.error,
-  border: COLORS.gray200,
-  borderError: COLORS.error,
-  background: COLORS.white,
-  backgroundDisabled: COLORS.gray100,
-  text: COLORS.black,
-  placeholder: COLORS.gray400,
-  icon: COLORS.gray400,
-};
+export const getFormSelectColors = (colors: ThemeColors) => ({
+  label: colors.black,
+  required: colors.error,
+  error: colors.error,
+  border: colors.gray200,
+  borderError: colors.error,
+  background: colors.white,
+  backgroundDisabled: colors.gray100,
+  text: colors.black,
+  placeholder: colors.gray400,
+  icon: colors.gray400,
+});
+
+export const FORM_SELECT_COLORS = getFormSelectColors(COLORS);

@@ -9,7 +9,8 @@ import {
 } from 'react-native';
 
 import type { TabsProps } from '../../types/tabs';
-import { TABS_COLORS } from '../../constants/tabs';
+import { getTabsColors } from '../../constants/tabs';
+import { useThemeColors } from '../../utils/theme';
 
 export type { TabsProps, TabItem } from '../../types/tabs';
 
@@ -28,6 +29,8 @@ export function Tabs<T = string>({
   textStyle,
   selectedTextStyle,
 }: TabsProps<T>) {
+  const colors = useThemeColors();
+  const tabsColors = getTabsColors(colors);
   const [tabLayouts, setTabLayouts] = useState<Map<T, TabLayout>>(new Map());
   const [isInitialized, setIsInitialized] = useState(false);
   const slideAnim = useRef(new Animated.Value(0)).current;
@@ -84,7 +87,13 @@ export function Tabs<T = string>({
   };
 
   return (
-    <View style={[styles.container, containerStyle]}>
+    <View
+      style={[
+        styles.container,
+        { backgroundColor: tabsColors.background },
+        containerStyle,
+      ]}
+    >
       <View style={styles.tabsRow}>
         {/* Sliding background indicator */}
         {tabLayouts.size > 0 && (
@@ -94,6 +103,7 @@ export function Tabs<T = string>({
               {
                 transform: [{ translateX: slideAnim }],
                 width: widthAnim,
+                backgroundColor: tabsColors.selectedTabBackground,
               },
               selectedTabStyle,
             ]}
@@ -106,13 +116,18 @@ export function Tabs<T = string>({
 
           const tabStyles: ViewStyle[] = [
             styles.tab,
+            {
+              backgroundColor: tabsColors.tabBackground,
+            },
             tabStyle,
             isDisabled && styles.disabled,
           ].filter(Boolean) as ViewStyle[];
 
           const labelStyles: TextStyle[] = [
             styles.text,
-            isSelected && styles.selectedText,
+            {
+              color: isSelected ? tabsColors.selectedText : tabsColors.text,
+            },
             textStyle,
             isSelected && selectedTextStyle,
           ].filter(Boolean) as TextStyle[];
@@ -150,7 +165,6 @@ export default Tabs;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: TABS_COLORS.background,
     borderRadius: 12,
     padding: 6,
   },
@@ -162,7 +176,6 @@ const styles = StyleSheet.create({
   },
   slidingIndicator: {
     position: 'absolute',
-    backgroundColor: TABS_COLORS.selectedTabBackground,
     borderRadius: 8,
     height: '100%',
     top: 0,
@@ -171,7 +184,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: TABS_COLORS.tabBackground,
     borderRadius: 8,
     paddingVertical: 8,
     paddingHorizontal: 10,
@@ -181,10 +193,6 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '500',
     textAlign: 'center',
-    color: TABS_COLORS.text,
-  },
-  selectedText: {
-    color: TABS_COLORS.selectedText,
   },
   disabled: {
     opacity: 0.5,

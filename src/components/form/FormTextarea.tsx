@@ -3,7 +3,8 @@ import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { Controller, type FieldValues } from 'react-hook-form';
 
 import type { FormTextareaProps } from '../../types/formTextarea';
-import { FORM_TEXTAREA_COLORS } from '../../constants/formTextarea';
+import { getFormTextareaColors } from '../../constants/formTextarea';
+import { useThemeColors } from '../../utils/theme';
 
 export type { FormTextareaProps } from '../../types/formTextarea';
 
@@ -17,7 +18,7 @@ export function FormTextarea<T extends FieldValues>({
   disabled,
   height = 140,
   maxLength,
-  focusBorderColor = FORM_TEXTAREA_COLORS.borderFocused,
+  focusBorderColor,
   inputProps,
   containerStyle,
   labelStyle,
@@ -25,7 +26,11 @@ export function FormTextarea<T extends FieldValues>({
   inputStyle,
   errorStyle,
 }: FormTextareaProps<T>) {
+  const colors = useThemeColors();
+  const textareaColors = getFormTextareaColors(colors);
   const [isFocused, setIsFocused] = useState(false);
+  const finalFocusBorderColor =
+    focusBorderColor ?? textareaColors.borderFocused;
 
   return (
     <Controller
@@ -38,9 +43,9 @@ export function FormTextarea<T extends FieldValues>({
         const errorMessage = error || fieldError?.message;
 
         const getBorderColor = () => {
-          if (errorMessage) return FORM_TEXTAREA_COLORS.borderError;
-          if (isFocused && !disabled) return focusBorderColor;
-          return FORM_TEXTAREA_COLORS.border;
+          if (errorMessage) return textareaColors.borderError;
+          if (isFocused && !disabled) return finalFocusBorderColor;
+          return textareaColors.border;
         };
 
         const {
@@ -53,8 +58,26 @@ export function FormTextarea<T extends FieldValues>({
           <View style={[styles.container, containerStyle]}>
             {label && (
               <View style={styles.labelContainer}>
-                <Text style={[styles.label, labelStyle]}>{label}</Text>
-                {required && <Text style={styles.required}> *</Text>}
+                <Text
+                  style={[
+                    styles.label,
+                    { color: textareaColors.label },
+                    labelStyle,
+                  ]}
+                >
+                  {label}
+                </Text>
+                {required && (
+                  <Text
+                    style={[
+                      styles.required,
+                      { color: textareaColors.required },
+                    ]}
+                  >
+                    {' '}
+                    *
+                  </Text>
+                )}
               </View>
             )}
             <View
@@ -64,8 +87,8 @@ export function FormTextarea<T extends FieldValues>({
                   height,
                   borderColor: getBorderColor(),
                   backgroundColor: disabled
-                    ? FORM_TEXTAREA_COLORS.backgroundDisabled
-                    : FORM_TEXTAREA_COLORS.background,
+                    ? textareaColors.backgroundDisabled
+                    : textareaColors.background,
                 },
                 disabled && styles.disabled,
                 textareaStyle,
@@ -73,7 +96,8 @@ export function FormTextarea<T extends FieldValues>({
             >
               <TextInput
                 placeholder={placeholder}
-                placeholderTextColor={FORM_TEXTAREA_COLORS.placeholder}
+                placeholderTextColor={textareaColors.placeholder}
+                selectionColor={colors.primary}
                 value={value || ''}
                 onChangeText={onChange}
                 multiline
@@ -89,11 +113,23 @@ export function FormTextarea<T extends FieldValues>({
                   onBlur();
                   inputOnBlur?.(e);
                 }}
-                style={[styles.input, inputStyle]}
+                style={[
+                  styles.input,
+                  { color: textareaColors.text },
+                  inputStyle,
+                ]}
               />
             </View>
             {errorMessage && (
-              <Text style={[styles.error, errorStyle]}>{errorMessage}</Text>
+              <Text
+                style={[
+                  styles.error,
+                  { color: textareaColors.error },
+                  errorStyle,
+                ]}
+              >
+                {errorMessage}
+              </Text>
             )}
           </View>
         );
@@ -118,12 +154,10 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: FORM_TEXTAREA_COLORS.label,
   },
   required: {
     fontSize: 14,
     fontWeight: '600',
-    color: FORM_TEXTAREA_COLORS.required,
   },
   textarea: {
     borderRadius: 12,
@@ -137,11 +171,9 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 15,
-    color: FORM_TEXTAREA_COLORS.text,
     textAlignVertical: 'top',
   },
   error: {
     fontSize: 14,
-    color: FORM_TEXTAREA_COLORS.error,
   },
 });

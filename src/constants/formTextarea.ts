@@ -1,14 +1,17 @@
 import { COLORS } from './colors';
+import type { ThemeColors } from '../types/theme';
 
-export const FORM_TEXTAREA_COLORS = {
-  label: COLORS.black,
-  required: COLORS.error,
-  error: COLORS.error,
-  border: COLORS.gray200,
-  borderFocused: COLORS.primary,
-  borderError: COLORS.error,
-  background: COLORS.white,
-  backgroundDisabled: COLORS.gray100,
-  text: COLORS.black,
-  placeholder: COLORS.gray400,
-};
+export const getFormTextareaColors = (colors: ThemeColors) => ({
+  label: colors.black,
+  required: colors.error,
+  error: colors.error,
+  border: colors.gray200,
+  borderFocused: colors.primary,
+  borderError: colors.error,
+  background: colors.white,
+  backgroundDisabled: colors.gray100,
+  text: colors.black,
+  placeholder: colors.gray400,
+});
+
+export const FORM_TEXTAREA_COLORS = getFormTextareaColors(COLORS);

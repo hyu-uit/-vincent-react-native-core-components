@@ -1,11 +1,14 @@
 import { COLORS } from './colors';
+import type { ThemeColors } from '../types/theme';
 
-export const PASSWORD_INPUT_COLORS = {
-  background: COLORS.white,
-  text: COLORS.black,
-  placeholder: COLORS.gray400,
-  border: COLORS.gray300,
-  borderFocused: COLORS.primary,
-  borderError: COLORS.danger,
-  icon: COLORS.gray400,
-};
+export const getPasswordInputColors = (colors: ThemeColors) => ({
+  background: colors.white,
+  text: colors.black,
+  placeholder: colors.gray400,
+  border: colors.gray300,
+  borderFocused: colors.primary,
+  borderError: colors.danger,
+  icon: colors.gray400,
+});
+
+export const PASSWORD_INPUT_COLORS = getPasswordInputColors(COLORS);

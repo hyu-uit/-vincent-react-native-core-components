@@ -1,9 +1,12 @@
 import { COLORS } from './colors';
+import type { ThemeColors } from '../types/theme';
 
-export const TABS_COLORS = {
-  background: COLORS.gray100,
-  tabBackground: COLORS.transparent,
-  selectedTabBackground: COLORS.white,
-  text: COLORS.gray400,
-  selectedText: COLORS.black,
-};
+export const getTabsColors = (colors: ThemeColors) => ({
+  background: colors.gray100,
+  tabBackground: colors.transparent,
+  selectedTabBackground: colors.white,
+  text: colors.gray400,
+  selectedText: colors.black,
+});
+
+export const TABS_COLORS = getTabsColors(COLORS);

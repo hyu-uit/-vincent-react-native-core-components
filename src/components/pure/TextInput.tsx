@@ -8,7 +8,8 @@ import {
 } from 'react-native';
 
 import type { TextInputProps } from '../../types/textInput';
-import { TEXT_INPUT_COLORS } from '../../constants/textInput';
+import { getTextInputColors } from '../../constants/textInput';
+import { useThemeColors } from '../../utils/theme';
 
 export type { TextInputProps } from '../../types/textInput';
 
@@ -20,10 +21,10 @@ export const TextInput = React.forwardRef<any, TextInputProps>(
       suffix,
       onClear,
       showClearButton = true,
-      placeholderTextColor = TEXT_INPUT_COLORS.placeholder,
+      placeholderTextColor,
       error = false,
       disabled = false,
-      focusBorderColor = TEXT_INPUT_COLORS.borderFocused,
+      focusBorderColor,
       value,
       placeholder,
       style,
@@ -33,28 +34,34 @@ export const TextInput = React.forwardRef<any, TextInputProps>(
     },
     ref
   ) => {
+    const colors = useThemeColors();
+    const inputColors = getTextInputColors(colors);
     const [isFocused, setIsFocused] = useState(false);
     const hasValue = value && value.length > 0;
     const shouldShowClearButton = showClearButton && hasValue && !disabled;
+
+    const finalPlaceholderColor =
+      placeholderTextColor ?? inputColors.placeholder;
+    const finalFocusBorderColor = focusBorderColor ?? inputColors.borderFocused;
 
     const handleClear = () => {
       onClear?.();
     };
 
     const getBorderColor = () => {
-      if (error) return TEXT_INPUT_COLORS.borderError;
-      if (isFocused && !disabled) return focusBorderColor;
-      return TEXT_INPUT_COLORS.border;
+      if (error) return inputColors.borderError;
+      if (isFocused && !disabled) return finalFocusBorderColor;
+      return inputColors.border;
     };
-
-    // Default clear icon as text fallback
-    const defaultClearIcon = <Text style={styles.clearIcon}>✕</Text>;
 
     return (
       <View
         style={[
           styles.container,
-          { borderColor: getBorderColor() },
+          {
+            borderColor: getBorderColor(),
+            backgroundColor: inputColors.background,
+          },
           disabled && styles.disabled,
         ]}
       >
@@ -66,7 +73,8 @@ export const TextInput = React.forwardRef<any, TextInputProps>(
           ref={ref}
           value={value}
           placeholder={placeholder}
-          placeholderTextColor={placeholderTextColor}
+          placeholderTextColor={finalPlaceholderColor}
+          selectionColor={colors.primary}
           editable={!disabled}
           {...textInputProps}
           onFocus={(e) => {
@@ -77,12 +85,16 @@ export const TextInput = React.forwardRef<any, TextInputProps>(
             setIsFocused(false);
             onBlur?.(e);
           }}
-          style={[styles.input, style]}
+          style={[styles.input, { color: inputColors.text }, style]}
         />
 
         {/* Right Side: Suffix Text or Clear Button */}
         <View style={styles.rightContainer}>
-          {suffix && <Text style={styles.suffix}>{suffix}</Text>}
+          {suffix && (
+            <Text style={[styles.suffix, { color: inputColors.placeholder }]}>
+              {suffix}
+            </Text>
+          )}
 
           {shouldShowClearButton && (
             <TouchableOpacity
@@ -90,7 +102,13 @@ export const TextInput = React.forwardRef<any, TextInputProps>(
               hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
               activeOpacity={0.7}
             >
-              {rightIcon || defaultClearIcon}
+              {rightIcon || (
+                <Text
+                  style={[styles.clearIcon, { color: inputColors.iconColor }]}
+                >
+                  ✕
+                </Text>
+              )}
             </TouchableOpacity>
           )}
         </View>
@@ -112,7 +130,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     paddingHorizontal: 20,
-    backgroundColor: TEXT_INPUT_COLORS.background,
   },
   disabled: {
     opacity: 0.5,
@@ -123,7 +140,6 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 16,
-    color: TEXT_INPUT_COLORS.text,
   },
   rightContainer: {
     marginLeft: 8,
@@ -133,10 +149,8 @@ const styles = StyleSheet.create({
   },
   suffix: {
     fontSize: 18,
-    color: TEXT_INPUT_COLORS.placeholder,
   },
   clearIcon: {
     fontSize: 16,
-    color: TEXT_INPUT_COLORS.iconColor,
   },
 });

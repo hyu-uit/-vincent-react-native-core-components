@@ -2,7 +2,8 @@ import { forwardRef, useCallback, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import type { SearchInputProps } from '../../types/searchInput';
-import { SEARCH_INPUT_COLORS } from '../../constants/searchInput';
+import { getSearchInputColors } from '../../constants/searchInput';
+import { useThemeColors } from '../../utils/theme';
 import { useDebounce } from '../../utils/debounce';
 import { TextInput } from './TextInput';
 
@@ -66,8 +67,13 @@ export const SearchInput = forwardRef<any, SearchInputProps>(
       onSearch?.('');
     }, [onClear, onChangeText, onSearch]);
 
+    const colors = useThemeColors();
+    const searchColors = getSearchInputColors(colors);
+
     // Default search icon as text fallback
-    const defaultSearchIcon = <Text style={styles.searchIcon}>🔍</Text>;
+    const defaultSearchIcon = (
+      <Text style={[styles.searchIcon, { color: searchColors.icon }]}>🔍</Text>
+    );
 
     return (
       <View style={style}>
@@ -96,6 +102,5 @@ export default SearchInput;
 const styles = StyleSheet.create({
   searchIcon: {
     fontSize: 18,
-    color: SEARCH_INPUT_COLORS.icon,
   },
 });

@@ -2,7 +2,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Controller, type FieldValues } from 'react-hook-form';
 
 import type { FormNumberInputProps } from '../../types/formNumberInput';
-import { FORM_NUMBER_INPUT_COLORS } from '../../constants/formNumberInput';
+import { getFormNumberInputColors } from '../../constants/formNumberInput';
+import { useThemeColors } from '../../utils/theme';
 import NumberInput from '../pure/NumberInput';
 
 export type { FormNumberInputProps } from '../../types/formNumberInput';
@@ -26,6 +27,8 @@ export function FormNumberInput<T extends FieldValues>({
   labelStyle,
   errorStyle,
 }: FormNumberInputProps<T>) {
+  const colors = useThemeColors();
+
   return (
     <Controller
       control={control}
@@ -34,6 +37,7 @@ export function FormNumberInput<T extends FieldValues>({
         field: { onChange, onBlur, value },
         fieldState: { error: fieldError },
       }) => {
+        const fieldColors = getFormNumberInputColors(colors);
         const errorMessage = error || fieldError?.message;
 
         const handleChangeValue = (numValue: number | null) => {
@@ -55,8 +59,23 @@ export function FormNumberInput<T extends FieldValues>({
           <View style={[styles.container, containerStyle]}>
             {label && (
               <View style={styles.labelContainer}>
-                <Text style={[styles.label, labelStyle]}>{label}</Text>
-                {required && <Text style={styles.required}> *</Text>}
+                <Text
+                  style={[
+                    styles.label,
+                    { color: fieldColors.label },
+                    labelStyle,
+                  ]}
+                >
+                  {label}
+                </Text>
+                {required && (
+                  <Text
+                    style={[styles.required, { color: fieldColors.required }]}
+                  >
+                    {' '}
+                    *
+                  </Text>
+                )}
               </View>
             )}
             <NumberInput
@@ -75,7 +94,11 @@ export function FormNumberInput<T extends FieldValues>({
               onBlur={onBlur}
             />
             {errorMessage && (
-              <Text style={[styles.error, errorStyle]}>{errorMessage}</Text>
+              <Text
+                style={[styles.error, { color: fieldColors.error }, errorStyle]}
+              >
+                {errorMessage}
+              </Text>
             )}
           </View>
         );
@@ -99,15 +122,12 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: FORM_NUMBER_INPUT_COLORS.label,
   },
   required: {
     fontSize: 14,
     fontWeight: '600',
-    color: FORM_NUMBER_INPUT_COLORS.required,
   },
   error: {
     fontSize: 14,
-    color: FORM_NUMBER_INPUT_COLORS.error,
   },
 });

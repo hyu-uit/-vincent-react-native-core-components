@@ -2,7 +2,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Controller, type FieldValues } from 'react-hook-form';
 
 import type { FormFieldProps } from '../../types/formField';
-import { FORM_FIELD_COLORS } from '../../constants/formField';
+import { getFormFieldColors } from '../../constants/formField';
+import { useThemeColors } from '../../utils/theme';
 import TextInput from '../pure/TextInput';
 
 export type {
@@ -24,6 +25,7 @@ export function FormField<T extends FieldValues>({
   labelStyle,
   errorStyle,
 }: FormFieldProps<T>) {
+  const colors = useThemeColors();
   return (
     <Controller
       control={control}
@@ -32,6 +34,7 @@ export function FormField<T extends FieldValues>({
         field: { onChange, onBlur, value },
         fieldState: { error: fieldError },
       }) => {
+        const fieldColors = getFormFieldColors(colors);
         const errorMessage = error || fieldError?.message;
 
         if (renderInput) {
@@ -50,9 +53,18 @@ export function FormField<T extends FieldValues>({
         return (
           <View style={[styles.container, containerStyle]}>
             {label && (
-              <Text style={[styles.label, labelStyle]}>
+              <Text
+                style={[styles.label, { color: fieldColors.label }, labelStyle]}
+              >
                 {label}
-                {required && <Text style={styles.required}> *</Text>}
+                {required && (
+                  <Text
+                    style={[styles.required, { color: fieldColors.required }]}
+                  >
+                    {' '}
+                    *
+                  </Text>
+                )}
               </Text>
             )}
             <TextInput
@@ -67,7 +79,11 @@ export function FormField<T extends FieldValues>({
               {...inputProps}
             />
             {errorMessage && (
-              <Text style={[styles.error, errorStyle]}>{errorMessage}</Text>
+              <Text
+                style={[styles.error, { color: fieldColors.error }, errorStyle]}
+              >
+                {errorMessage}
+              </Text>
             )}
           </View>
         );
@@ -88,14 +104,10 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontSize: 14,
     fontWeight: '500',
-    color: FORM_FIELD_COLORS.label,
   },
-  required: {
-    color: FORM_FIELD_COLORS.required,
-  },
+  required: {},
   error: {
     marginTop: 4,
     fontSize: 12,
-    color: FORM_FIELD_COLORS.error,
   },
 });

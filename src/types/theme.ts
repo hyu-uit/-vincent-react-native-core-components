@@ -1,39 +1,43 @@
-export const COLORS = {
+export interface ThemeColors {
   // Neutrals
   /** White color - used for backgrounds, selected states */
-  white: '#ffffff',
+  white: string;
   /** Black color - used for primary text, labels */
-  black: '#181819',
+  black: string;
 
   // Grays
   /** Light gray background - used for secondary button backgrounds, tabs container, disabled backgrounds, skeleton backgrounds */
-  gray100: '#E3E5E6',
+  gray100: string;
   /** Light gray border/divider - used for divider lines, form select/textarea borders, button outline borders */
-  gray200: '#E1E2E3',
+  gray200: string;
   /** Default gray border - used for input borders (TextInput, PasswordInput, NumberInput, Checkbox) */
-  gray300: '#d1d5db',
+  gray300: string;
   /** Muted gray text - used for placeholders, icons, secondary text, labels, disabled text */
-  gray400: '#9ca3af',
+  gray400: string;
 
   // Primary
   /** Primary brand color - used for primary buttons, focus borders, active states, selection cursor */
-  primary: '#3b82f6',
+  primary: string;
 
   // Danger / Error
   /** Danger color - used for danger buttons, error states */
-  danger: '#E33D42',
+  danger: string;
   /** Light danger background - used for danger button backgrounds */
-  dangerLight: 'rgba(227, 61, 66, 0.1)',
+  dangerLight: string;
   /** Error color - used for error messages, error borders, required field indicators */
-  error: '#ef4444',
+  error: string;
 
   // Disabled
   /** Disabled background color - used for disabled input/button backgrounds */
-  disabled: '#e5e7eb',
+  disabled: string;
   /** Disabled text color - used for disabled text (same as gray400) */
-  disabledText: '#9ca3af',
+  disabledText: string;
 
   // Transparent
   /** Transparent color - used for transparent backgrounds */
-  transparent: 'transparent',
-};
+  transparent: string;
+}
+
+export interface Theme {
+  colors: ThemeColors;
+}

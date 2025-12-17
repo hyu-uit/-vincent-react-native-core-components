@@ -1,11 +1,18 @@
 import { StyleSheet, View } from 'react-native';
 
 import type { DividerProps } from '../../types/divider';
-import { DIVIDER_COLORS, DIVIDER_DEFAULT_SIZE } from '../../constants/divider';
+import {
+  getDividerColors,
+  DIVIDER_DEFAULT_SIZE,
+} from '../../constants/divider';
+import { useThemeColors } from '../../utils/theme';
 
 export type { DividerProps } from '../../types/divider';
 
 const Divider = ({ height, width, style, vertical = false }: DividerProps) => {
+  const colors = useThemeColors();
+  const dividerColors = getDividerColors(colors);
+
   if (vertical) {
     const defaults = DIVIDER_DEFAULT_SIZE.vertical;
     const finalWidth = width ?? defaults.width;
@@ -14,7 +21,10 @@ const Divider = ({ height, width, style, vertical = false }: DividerProps) => {
       <View
         style={[
           styles.divider,
-          { width: finalWidth },
+          {
+            width: finalWidth,
+            backgroundColor: dividerColors.background,
+          },
           height != null ? { height } : styles.flex,
           style,
         ]}
@@ -29,7 +39,10 @@ const Divider = ({ height, width, style, vertical = false }: DividerProps) => {
     <View
       style={[
         styles.divider,
-        { height: finalHeight },
+        {
+          height: finalHeight,
+          backgroundColor: dividerColors.background,
+        },
         width != null ? { width } : styles.fullWidth,
         style,
       ]}
@@ -40,9 +53,7 @@ const Divider = ({ height, width, style, vertical = false }: DividerProps) => {
 export default Divider;
 
 const styles = StyleSheet.create({
-  divider: {
-    backgroundColor: DIVIDER_COLORS.background,
-  },
+  divider: {},
   flex: {
     flex: 1,
   },

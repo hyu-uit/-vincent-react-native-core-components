@@ -2,7 +2,8 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import type { CheckboxProps } from '../../types/checkbox';
-import { CHECKBOX_COLORS } from '../../constants/checkbox';
+import { getCheckboxColors } from '../../constants/checkbox';
+import { useThemeColors } from '../../utils/theme';
 
 export type { CheckboxProps } from '../../types/checkbox';
 
@@ -22,18 +23,28 @@ export const Checkbox = React.forwardRef<
     },
     ref
   ) => {
+    const colors = useThemeColors();
+    const checkboxColors = getCheckboxColors(colors);
+
     const borderColor = error
-      ? CHECKBOX_COLORS.borderError
+      ? checkboxColors.borderError
       : checked
-      ? CHECKBOX_COLORS.borderChecked
-      : CHECKBOX_COLORS.border;
+      ? checkboxColors.borderChecked
+      : checkboxColors.border;
 
     const backgroundColor = checked
-      ? CHECKBOX_COLORS.checked
-      : CHECKBOX_COLORS.unchecked;
+      ? checkboxColors.checked
+      : checkboxColors.unchecked;
 
     const defaultCheckIcon = (
-      <Text style={[styles.checkmark, { fontSize: size * 0.7 }]}>✓</Text>
+      <Text
+        style={[
+          styles.checkmark,
+          { fontSize: size * 0.7, color: checkboxColors.checkmark },
+        ]}
+      >
+        ✓
+      </Text>
     );
 
     return (
@@ -59,7 +70,9 @@ export const Checkbox = React.forwardRef<
         </View>
         {label &&
           (typeof label === 'string' ? (
-            <Text style={styles.label}>{label}</Text>
+            <Text style={[styles.label, { color: checkboxColors.labelText }]}>
+              {label}
+            </Text>
           ) : (
             <View>{label}</View>
           ))}
@@ -88,12 +101,10 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
   checkmark: {
-    color: CHECKBOX_COLORS.checkmark,
     fontWeight: 'bold',
   },
   label: {
     fontSize: 12,
     lineHeight: 16,
-    color: CHECKBOX_COLORS.labelText,
   },
 });

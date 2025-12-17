@@ -9,17 +9,18 @@ import {
 } from 'react-native';
 
 import type { PasswordInputProps } from '../../types/passwordInput';
-import { PASSWORD_INPUT_COLORS } from '../../constants/passwordInput';
+import { getPasswordInputColors } from '../../constants/passwordInput';
+import { useThemeColors } from '../../utils/theme';
 
 export type { PasswordInputProps } from '../../types/passwordInput';
 
 export const PasswordInput = React.forwardRef<any, PasswordInputProps>(
   (
     {
-      placeholderTextColor = PASSWORD_INPUT_COLORS.placeholder,
+      placeholderTextColor,
       error = false,
       disabled = false,
-      focusBorderColor = PASSWORD_INPUT_COLORS.borderFocused,
+      focusBorderColor,
       showIcon,
       hideIcon,
       value,
@@ -31,23 +32,36 @@ export const PasswordInput = React.forwardRef<any, PasswordInputProps>(
     },
     ref
   ) => {
+    const colors = useThemeColors();
+    const inputColors = getPasswordInputColors(colors);
     const [isFocused, setIsFocused] = useState(false);
     const [secureTextEntry, setSecureTextEntry] = useState(true);
 
+    const finalPlaceholderColor =
+      placeholderTextColor ?? inputColors.placeholder;
+    const finalFocusBorderColor = focusBorderColor ?? inputColors.borderFocused;
+
     const getBorderColor = () => {
-      if (error) return PASSWORD_INPUT_COLORS.borderError;
-      if (isFocused && !disabled) return focusBorderColor;
-      return PASSWORD_INPUT_COLORS.border;
+      if (error) return inputColors.borderError;
+      if (isFocused && !disabled) return finalFocusBorderColor;
+      return inputColors.border;
     };
 
-    const defaultShowIcon = <Text style={styles.iconText}>Show</Text>;
-    const defaultHideIcon = <Text style={styles.iconText}>Hide</Text>;
+    const defaultShowIcon = (
+      <Text style={[styles.iconText, { color: inputColors.icon }]}>Show</Text>
+    );
+    const defaultHideIcon = (
+      <Text style={[styles.iconText, { color: inputColors.icon }]}>Hide</Text>
+    );
 
     return (
       <View
         style={[
           styles.container,
-          { borderColor: getBorderColor() },
+          {
+            borderColor: getBorderColor(),
+            backgroundColor: inputColors.background,
+          },
           disabled && styles.disabled,
         ]}
       >
@@ -55,7 +69,7 @@ export const PasswordInput = React.forwardRef<any, PasswordInputProps>(
           ref={ref}
           value={value}
           placeholder={placeholder}
-          placeholderTextColor={placeholderTextColor}
+          placeholderTextColor={finalPlaceholderColor}
           editable={!disabled}
           {...textInputProps}
           onFocus={(e: FocusEvent) => {
@@ -66,7 +80,7 @@ export const PasswordInput = React.forwardRef<any, PasswordInputProps>(
             setIsFocused(false);
             onBlur?.(e);
           }}
-          style={[styles.input, style]}
+          style={[styles.input, { color: inputColors.text }, style]}
           secureTextEntry={secureTextEntry}
         />
 
@@ -96,14 +110,12 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     paddingHorizontal: 20,
-    backgroundColor: PASSWORD_INPUT_COLORS.background,
   },
   disabled: {
     opacity: 0.5,
   },
   input: {
     flex: 1,
-    color: PASSWORD_INPUT_COLORS.text,
     fontSize: 16,
   },
   iconButton: {
@@ -111,6 +123,5 @@ const styles = StyleSheet.create({
   },
   iconText: {
     fontSize: 12,
-    color: PASSWORD_INPUT_COLORS.icon,
   },
 });

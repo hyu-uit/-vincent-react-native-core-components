@@ -1,6 +1,9 @@
 import { COLORS } from './colors';
+import type { ThemeColors } from '../types/theme';
 
-export const AVATAR_COLORS = {
-  placeholder: COLORS.gray400,
-  text: COLORS.white,
-};
+export const getAvatarColors = (colors: ThemeColors) => ({
+  placeholder: colors.gray400,
+  text: colors.white,
+});
+
+export const AVATAR_COLORS = getAvatarColors(COLORS);

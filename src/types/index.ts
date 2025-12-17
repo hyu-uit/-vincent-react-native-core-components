@@ -9,6 +9,7 @@ export * from './formPasswordField';
 export * from './formSelect';
 export * from './formTextarea';
 export * from './loading';
+export * from './theme';
 export * from './numberInput';
 export * from './passwordInput';
 export * from './phoneNumberInput';

@@ -1,54 +1,66 @@
 import { COLORS } from './colors';
 import type { ButtonVariant, ButtonSize } from '../types/button';
+import type { ThemeColors } from '../types/theme';
 
-export const BUTTON_COLORS = {
-  primary: COLORS.primary,
-  primaryText: COLORS.white,
-  secondary: COLORS.gray100,
-  secondaryText: COLORS.black,
-  outline: COLORS.transparent,
-  outlineBorder: COLORS.gray200,
-  outlineText: COLORS.black,
-  ghost: COLORS.transparent,
-  ghostText: COLORS.black,
-  textVariant: COLORS.transparent,
-  textVariantText: COLORS.black,
-  danger: COLORS.dangerLight,
-  dangerText: COLORS.danger,
-  disabled: COLORS.disabled,
-  disabledText: COLORS.disabledText,
-};
+export const getButtonColors = (colors: ThemeColors) => ({
+  primary: colors.primary,
+  primaryText: colors.white,
+  secondary: colors.gray100,
+  secondaryText: colors.black,
+  outline: colors.transparent,
+  outlineBorder: colors.gray200,
+  outlineText: colors.black,
+  ghost: colors.transparent,
+  ghostText: colors.black,
+  textVariant: colors.transparent,
+  textVariantText: colors.black,
+  danger: colors.dangerLight,
+  dangerText: colors.danger,
+  disabled: colors.disabled,
+  disabledText: colors.disabledText,
+});
 
-export const BUTTON_VARIANT_STYLES: Record<
+// Default export for backward compatibility
+export const BUTTON_COLORS = getButtonColors(COLORS);
+
+export const getButtonVariantStyles = (
+  colors: ThemeColors
+): Record<
   ButtonVariant,
   { backgroundColor: string; textColor: string; borderColor?: string }
-> = {
-  primary: {
-    backgroundColor: BUTTON_COLORS.primary,
-    textColor: BUTTON_COLORS.primaryText,
-  },
-  secondary: {
-    backgroundColor: BUTTON_COLORS.secondary,
-    textColor: BUTTON_COLORS.secondaryText,
-  },
-  outline: {
-    backgroundColor: BUTTON_COLORS.outline,
-    textColor: BUTTON_COLORS.outlineText,
-    borderColor: BUTTON_COLORS.outlineBorder,
-  },
-  ghost: {
-    backgroundColor: BUTTON_COLORS.ghost,
-    textColor: BUTTON_COLORS.ghostText,
-  },
-  text: {
-    backgroundColor: BUTTON_COLORS.textVariant,
-    textColor: BUTTON_COLORS.textVariantText,
-  },
-  danger: {
-    backgroundColor: BUTTON_COLORS.danger,
-    textColor: BUTTON_COLORS.dangerText,
-  },
+> => {
+  const buttonColors = getButtonColors(colors);
+  return {
+    primary: {
+      backgroundColor: buttonColors.primary,
+      textColor: buttonColors.primaryText,
+    },
+    secondary: {
+      backgroundColor: buttonColors.secondary,
+      textColor: buttonColors.secondaryText,
+    },
+    outline: {
+      backgroundColor: buttonColors.outline,
+      textColor: buttonColors.outlineText,
+      borderColor: buttonColors.outlineBorder,
+    },
+    ghost: {
+      backgroundColor: buttonColors.ghost,
+      textColor: buttonColors.ghostText,
+    },
+    text: {
+      backgroundColor: buttonColors.textVariant,
+      textColor: buttonColors.textVariantText,
+    },
+    danger: {
+      backgroundColor: buttonColors.danger,
+      textColor: buttonColors.dangerText,
+    },
+  };
 };
+
+// Default export for backward compatibility
+export const BUTTON_VARIANT_STYLES = getButtonVariantStyles(COLORS);
 
 export const BUTTON_SIZE_STYLES: Record<
   ButtonSize,

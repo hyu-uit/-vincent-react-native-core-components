@@ -1,11 +1,15 @@
 import { COLORS } from './colors';
+import type { ThemeColors } from '../types/theme';
 
-export const TEXT_INPUT_COLORS = {
-  background: COLORS.white,
-  text: COLORS.black,
-  placeholder: COLORS.gray400,
-  border: COLORS.gray300,
-  borderFocused: COLORS.primary,
-  borderError: COLORS.danger,
-  iconColor: COLORS.gray400,
-};
+export const getTextInputColors = (colors: ThemeColors) => ({
+  background: colors.white,
+  text: colors.black,
+  placeholder: colors.gray400,
+  border: colors.gray300,
+  borderFocused: colors.primary,
+  borderError: colors.danger,
+  iconColor: colors.gray400,
+});
+
+// Default export for backward compatibility
+export const TEXT_INPUT_COLORS = getTextInputColors(COLORS);

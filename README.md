@@ -35,6 +35,31 @@ npm install @vincent-hyu-uit/react-native-core-components
 yarn add @vincent-hyu-uit/react-native-core-components
 ```
 
+## Theming
+
+Customize colors globally using the `ThemeProvider`:
+
+```tsx
+import { ThemeProvider } from '@vincent-hyu-uit/react-native-core-components';
+
+function App() {
+  return (
+    <ThemeProvider
+      colors={{
+        primary: '#6366f1', // Custom primary color
+        error: '#dc2626',   // Custom error color
+        gray100: '#f3f4f6', // Custom gray
+        // ... override any colors you need
+      }}
+    >
+      {/* Your app components */}
+    </ThemeProvider>
+  );
+}
+```
+
+All components will automatically use the custom colors. Colors not provided will use the default values.
+
 ## Components
 
 ### Button

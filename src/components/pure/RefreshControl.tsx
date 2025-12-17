@@ -2,7 +2,8 @@ import React from 'react';
 import { RefreshControl as RNRefreshControl } from 'react-native';
 
 import type { RefreshControlComponentProps } from '../../types/refreshControl';
-import { REFRESH_CONTROL_COLORS } from '../../constants/refreshControl';
+import { getRefreshControlColors } from '../../constants/refreshControl';
+import { useThemeColors } from '../../utils/theme';
 
 export type { RefreshControlComponentProps } from '../../types/refreshControl';
 
@@ -13,16 +14,21 @@ export type { RefreshControlComponentProps } from '../../types/refreshControl';
 export const RefreshControl: React.FC<RefreshControlComponentProps> = ({
   refreshing,
   onRefresh,
-  tintColor = REFRESH_CONTROL_COLORS.tint,
-  colors: androidColors = REFRESH_CONTROL_COLORS.android,
+  tintColor,
+  colors: androidColors,
   ...props
 }) => {
+  const themeColors = useThemeColors();
+  const refreshColors = getRefreshControlColors(themeColors);
+  const finalTintColor = tintColor ?? refreshColors.tint;
+  const finalAndroidColors = androidColors ?? refreshColors.android;
+
   return (
     <RNRefreshControl
       refreshing={refreshing}
       onRefresh={onRefresh}
-      tintColor={tintColor}
-      colors={androidColors}
+      tintColor={finalTintColor}
+      colors={finalAndroidColors}
       {...props}
     />
   );

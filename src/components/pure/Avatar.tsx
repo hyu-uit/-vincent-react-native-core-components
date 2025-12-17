@@ -1,7 +1,8 @@
 import { StyleSheet, Text, Image, View } from 'react-native';
 
 import type { AvatarProps } from '../../types/avatar';
-import { AVATAR_COLORS } from '../../constants/avatar';
+import { getAvatarColors } from '../../constants/avatar';
+import { useThemeColors } from '../../utils/theme';
 
 export type { AvatarProps } from '../../types/avatar';
 
@@ -12,6 +13,8 @@ const Avatar = ({
   nameStyle,
   containerStyle,
 }: AvatarProps) => {
+  const colors = useThemeColors();
+  const avatarColors = getAvatarColors(colors);
   const lastWord = name?.trim().split(' ').pop() || '';
   const firstLetter = lastWord[0]?.toUpperCase() || '';
 
@@ -31,11 +34,22 @@ const Avatar = ({
         <View
           style={[
             styles.placeholder,
-            { width: size, height: size, borderRadius: size / 2 },
+            {
+              width: size,
+              height: size,
+              borderRadius: size / 2,
+              backgroundColor: avatarColors.placeholder,
+            },
             containerStyle,
           ]}
         >
-          <Text style={[styles.name, { fontSize: size / 2 }, nameStyle]}>
+          <Text
+            style={[
+              styles.name,
+              { fontSize: size / 2, color: avatarColors.text },
+              nameStyle,
+            ]}
+          >
             {firstLetter}
           </Text>
         </View>
@@ -48,12 +62,10 @@ export default Avatar;
 
 const styles = StyleSheet.create({
   placeholder: {
-    backgroundColor: AVATAR_COLORS.placeholder,
     justifyContent: 'center',
     alignItems: 'center',
   },
   name: {
-    color: AVATAR_COLORS.text,
     fontSize: 30,
     fontWeight: 'bold',
   },

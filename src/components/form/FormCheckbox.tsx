@@ -2,7 +2,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Controller, type FieldValues } from 'react-hook-form';
 
 import type { FormCheckboxProps } from '../../types/formCheckbox';
-import { FORM_CHECKBOX_COLORS } from '../../constants/formCheckbox';
+import { getFormCheckboxColors } from '../../constants/formCheckbox';
+import { useThemeColors } from '../../utils/theme';
 import Checkbox from '../pure/Checkbox';
 
 export type { FormCheckboxProps } from '../../types/formCheckbox';
@@ -18,6 +19,7 @@ export function FormCheckbox<T extends FieldValues>({
   size,
   checkIcon,
 }: FormCheckboxProps<T>) {
+  const colors = useThemeColors();
   return (
     <Controller
       control={control}
@@ -26,6 +28,7 @@ export function FormCheckbox<T extends FieldValues>({
         field: { onChange, value },
         fieldState: { error: fieldError },
       }) => {
+        const fieldColors = getFormCheckboxColors(colors);
         const errorMessage = error || fieldError?.message;
 
         return (
@@ -40,7 +43,11 @@ export function FormCheckbox<T extends FieldValues>({
               checkIcon={checkIcon}
             />
             {errorMessage && (
-              <Text style={[styles.error, errorStyle]}>{errorMessage}</Text>
+              <Text
+                style={[styles.error, { color: fieldColors.error }, errorStyle]}
+              >
+                {errorMessage}
+              </Text>
             )}
           </View>
         );
@@ -60,6 +67,5 @@ const styles = StyleSheet.create({
   error: {
     marginTop: 4,
     fontSize: 12,
-    color: FORM_CHECKBOX_COLORS.error,
   },
 });

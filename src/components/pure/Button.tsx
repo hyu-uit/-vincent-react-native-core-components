@@ -10,10 +10,11 @@ import {
 
 import type { ButtonProps } from '../../types/button';
 import {
-  BUTTON_COLORS,
-  BUTTON_VARIANT_STYLES,
+  getButtonColors,
+  getButtonVariantStyles,
   BUTTON_SIZE_STYLES,
 } from '../../constants/button';
+import { useThemeColors } from '../../utils/theme';
 
 export type {
   ButtonProps,
@@ -43,9 +44,12 @@ export const Button = React.forwardRef<
     },
     ref
   ) => {
-    const isDisabled = disabled || loading;
-    const variantStyle = BUTTON_VARIANT_STYLES[variant];
+    const colors = useThemeColors();
+    const buttonColors = getButtonColors(colors);
+    const variantStyles = getButtonVariantStyles(colors);
+    const variantStyle = variantStyles[variant];
     const sizeStyle = BUTTON_SIZE_STYLES[size];
+    const isDisabled = disabled || loading;
 
     const isTextVariant = variant === 'text';
 
@@ -53,7 +57,7 @@ export const Button = React.forwardRef<
       styles.container,
       {
         backgroundColor: isDisabled
-          ? BUTTON_COLORS.disabled
+          ? buttonColors.disabled
           : variantStyle.backgroundColor,
         height: isTextVariant ? undefined : sizeStyle.height,
         paddingHorizontal: isTextVariant ? 0 : sizeStyle.paddingHorizontal,
@@ -74,7 +78,7 @@ export const Button = React.forwardRef<
         fontSize: sizeStyle.fontSize,
         color:
           textColor ||
-          (isDisabled ? BUTTON_COLORS.disabledText : variantStyle.textColor),
+          (isDisabled ? buttonColors.disabledText : variantStyle.textColor),
       },
       isTextVariant && styles.underline,
     ].filter(Boolean) as TextStyle[];
@@ -92,7 +96,7 @@ export const Button = React.forwardRef<
             size="small"
             color={
               variant === 'primary'
-                ? BUTTON_COLORS.primaryText
+                ? buttonColors.primaryText
                 : variantStyle.textColor
             }
           />

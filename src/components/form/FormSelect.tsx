@@ -2,7 +2,8 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { Controller, type FieldValues } from 'react-hook-form';
 
 import type { FormSelectProps } from '../../types/formSelect';
-import { FORM_SELECT_COLORS } from '../../constants/formSelect';
+import { getFormSelectColors } from '../../constants/formSelect';
+import { useThemeColors } from '../../utils/theme';
 
 export type { FormSelectProps } from '../../types/formSelect';
 
@@ -23,11 +24,14 @@ export function FormSelect<T extends FieldValues>({
   selectTextStyle,
   errorStyle,
 }: FormSelectProps<T>) {
+  const colors = useThemeColors();
+
   return (
     <Controller
       control={control}
       name={name}
       render={({ field: { value }, fieldState: { error: fieldError } }) => {
+        const selectColors = getFormSelectColors(colors);
         const errorMessage = error || fieldError?.message;
         const hasValue = value && value.length > 0;
         const displayText = displayValue || value;
@@ -36,8 +40,23 @@ export function FormSelect<T extends FieldValues>({
           <View style={[styles.container, containerStyle]}>
             {label && (
               <View style={styles.labelContainer}>
-                <Text style={[styles.label, labelStyle]}>{label}</Text>
-                {required && <Text style={styles.required}> *</Text>}
+                <Text
+                  style={[
+                    styles.label,
+                    { color: selectColors.label },
+                    labelStyle,
+                  ]}
+                >
+                  {label}
+                </Text>
+                {required && (
+                  <Text
+                    style={[styles.required, { color: selectColors.required }]}
+                  >
+                    {' '}
+                    *
+                  </Text>
+                )}
               </View>
             )}
             <TouchableOpacity
@@ -48,11 +67,11 @@ export function FormSelect<T extends FieldValues>({
                 styles.select,
                 {
                   borderColor: errorMessage
-                    ? FORM_SELECT_COLORS.borderError
-                    : FORM_SELECT_COLORS.border,
+                    ? selectColors.borderError
+                    : selectColors.border,
                   backgroundColor: disabled
-                    ? FORM_SELECT_COLORS.backgroundDisabled
-                    : FORM_SELECT_COLORS.background,
+                    ? selectColors.backgroundDisabled
+                    : selectColors.background,
                 },
                 disabled && styles.disabled,
                 selectStyle,
@@ -63,18 +82,30 @@ export function FormSelect<T extends FieldValues>({
                   styles.selectText,
                   {
                     color: hasValue
-                      ? FORM_SELECT_COLORS.text
-                      : FORM_SELECT_COLORS.placeholder,
+                      ? selectColors.text
+                      : selectColors.placeholder,
                   },
                   selectTextStyle,
                 ]}
               >
                 {hasValue ? displayText : placeholder}
               </Text>
-              {rightIcon || <Text style={styles.icon}>▼</Text>}
+              {rightIcon || (
+                <Text style={[styles.icon, { color: selectColors.icon }]}>
+                  ▼
+                </Text>
+              )}
             </TouchableOpacity>
             {errorMessage && (
-              <Text style={[styles.error, errorStyle]}>{errorMessage}</Text>
+              <Text
+                style={[
+                  styles.error,
+                  { color: selectColors.error },
+                  errorStyle,
+                ]}
+              >
+                {errorMessage}
+              </Text>
             )}
           </View>
         );
@@ -100,12 +131,10 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: FORM_SELECT_COLORS.label,
   },
   required: {
     fontSize: 14,
     fontWeight: '600',
-    color: FORM_SELECT_COLORS.required,
   },
   select: {
     flexDirection: 'row',
@@ -125,10 +154,8 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 12,
-    color: FORM_SELECT_COLORS.icon,
   },
   error: {
     fontSize: 14,
-    color: FORM_SELECT_COLORS.error,
   },
 });

@@ -4,7 +4,8 @@ import { StyleSheet, View } from 'react-native';
 import CurrencyInput from 'react-native-currency-input';
 
 import type { NumberInputProps } from '../../types/numberInput';
-import { NUMBER_INPUT_COLORS } from '../../constants/numberInput';
+import { getNumberInputColors } from '../../constants/numberInput';
+import { useThemeColors } from '../../utils/theme';
 
 export type { NumberInputProps } from '../../types/numberInput';
 
@@ -30,19 +31,24 @@ export const NumberInput = React.forwardRef<any, NumberInputProps>(
     },
     ref
   ) => {
+    const colors = useThemeColors();
+    const inputColors = getNumberInputColors(colors);
     const [isFocused, setIsFocused] = useState(false);
 
     const getBorderColor = () => {
-      if (error) return NUMBER_INPUT_COLORS.borderError;
-      if (isFocused && !disabled) return NUMBER_INPUT_COLORS.borderFocused;
-      return NUMBER_INPUT_COLORS.border;
+      if (error) return inputColors.borderError;
+      if (isFocused && !disabled) return inputColors.borderFocused;
+      return inputColors.border;
     };
 
     return (
       <View
         style={[
           styles.container,
-          { borderColor: getBorderColor() },
+          {
+            borderColor: getBorderColor(),
+            backgroundColor: inputColors.background,
+          },
           disabled && styles.disabled,
         ]}
       >
@@ -58,6 +64,7 @@ export const NumberInput = React.forwardRef<any, NumberInputProps>(
           minValue={minValue}
           maxValue={maxValue}
           placeholder={placeholder}
+          selectionColor={colors.primary}
           editable={!disabled}
           keyboardType="numeric"
           returnKeyType="done"
@@ -70,7 +77,7 @@ export const NumberInput = React.forwardRef<any, NumberInputProps>(
             setIsFocused(false);
             onBlur?.(e);
           }}
-          style={[styles.input, style]}
+          style={[styles.input, { color: inputColors.text }, style]}
         />
       </View>
     );
@@ -90,14 +97,12 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderWidth: 1,
     paddingHorizontal: 20,
-    backgroundColor: NUMBER_INPUT_COLORS.background,
   },
   disabled: {
     opacity: 0.5,
   },
   input: {
     flex: 1,
-    color: NUMBER_INPUT_COLORS.text,
     fontSize: 16,
   },
 });

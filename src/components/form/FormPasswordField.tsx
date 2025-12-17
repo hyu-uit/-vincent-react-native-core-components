@@ -2,7 +2,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Controller, type FieldValues } from 'react-hook-form';
 
 import type { FormPasswordFieldProps } from '../../types/formPasswordField';
-import { FORM_PASSWORD_FIELD_COLORS } from '../../constants/formPasswordField';
+import { getFormPasswordFieldColors } from '../../constants/formPasswordField';
+import { useThemeColors } from '../../utils/theme';
 import PasswordInput from '../pure/PasswordInput';
 
 export type {
@@ -26,6 +27,8 @@ export function FormPasswordField<T extends FieldValues>({
   labelStyle,
   errorStyle,
 }: FormPasswordFieldProps<T>) {
+  const colors = useThemeColors();
+
   return (
     <Controller
       control={control}
@@ -34,6 +37,7 @@ export function FormPasswordField<T extends FieldValues>({
         field: { onChange, onBlur, value },
         fieldState: { error: fieldError },
       }) => {
+        const fieldColors = getFormPasswordFieldColors(colors);
         const errorMessage = error || fieldError?.message;
 
         if (renderInput) {
@@ -48,9 +52,18 @@ export function FormPasswordField<T extends FieldValues>({
         return (
           <View style={[styles.container, containerStyle]}>
             {label && (
-              <Text style={[styles.label, labelStyle]}>
+              <Text
+                style={[styles.label, { color: fieldColors.label }, labelStyle]}
+              >
                 {label}
-                {required && <Text style={styles.required}> *</Text>}
+                {required && (
+                  <Text
+                    style={[styles.required, { color: fieldColors.required }]}
+                  >
+                    {' '}
+                    *
+                  </Text>
+                )}
               </Text>
             )}
             <PasswordInput
@@ -65,7 +78,11 @@ export function FormPasswordField<T extends FieldValues>({
               {...inputProps}
             />
             {errorMessage && (
-              <Text style={[styles.error, errorStyle]}>{errorMessage}</Text>
+              <Text
+                style={[styles.error, { color: fieldColors.error }, errorStyle]}
+              >
+                {errorMessage}
+              </Text>
             )}
           </View>
         );
@@ -86,14 +103,10 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     fontSize: 14,
     fontWeight: '500',
-    color: FORM_PASSWORD_FIELD_COLORS.label,
   },
-  required: {
-    color: FORM_PASSWORD_FIELD_COLORS.required,
-  },
+  required: {},
   error: {
     marginTop: 4,
     fontSize: 12,
-    color: FORM_PASSWORD_FIELD_COLORS.error,
   },
 });
