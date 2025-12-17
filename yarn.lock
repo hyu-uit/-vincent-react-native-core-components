@@ -3549,6 +3549,48 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vincent-hyu-uit/react-native-core-components@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@vincent-hyu-uit/react-native-core-components@workspace:."
+  dependencies:
+    "@commitlint/config-conventional": "npm:^19.8.1"
+    "@eslint/compat": "npm:^1.3.2"
+    "@eslint/eslintrc": "npm:^3.3.1"
+    "@eslint/js": "npm:^9.35.0"
+    "@react-native/babel-preset": "npm:0.83.0"
+    "@react-native/eslint-config": "npm:0.83.0"
+    "@release-it/conventional-changelog": "npm:^10.0.1"
+    "@types/jest": "npm:^29.5.14"
+    "@types/react": "npm:^19.2.0"
+    commitlint: "npm:^19.8.1"
+    del-cli: "npm:^6.0.0"
+    eslint: "npm:^9.35.0"
+    eslint-config-prettier: "npm:^10.1.8"
+    eslint-plugin-prettier: "npm:^5.5.4"
+    jest: "npm:^29.7.0"
+    lefthook: "npm:^2.0.3"
+    prettier: "npm:^2.8.8"
+    react: "npm:19.2.0"
+    react-hook-form: "npm:^7.68.0"
+    react-native: "npm:0.83.0"
+    react-native-builder-bob: "npm:^0.40.17"
+    react-native-currency-input: "npm:^1.1.1"
+    release-it: "npm:^19.0.4"
+    turbo: "npm:^2.5.6"
+    typescript: "npm:^5.9.2"
+  peerDependencies:
+    react: "*"
+    react-hook-form: ">=7.0.0"
+    react-native: "*"
+    react-native-currency-input: ">=1.0.0"
+  peerDependenciesMeta:
+    react-hook-form:
+      optional: true
+    react-native-currency-input:
+      optional: true
+  languageName: unknown
+  linkType: soft
+
 "@vincent/react-native-core-components-example@workspace:example":
   version: 0.0.0-use.local
   resolution: "@vincent/react-native-core-components-example@workspace:example"
@@ -3569,45 +3611,6 @@ __metadata:
     react-native-currency-input: "npm:^1.1.1"
     react-native-monorepo-config: "npm:^0.3.1"
     react-native-safe-area-context: "npm:^5.6.2"
-  languageName: unknown
-  linkType: soft
-
-"@vincent/react-native-core-components@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@vincent/react-native-core-components@workspace:."
-  dependencies:
-    "@commitlint/config-conventional": "npm:^19.8.1"
-    "@eslint/compat": "npm:^1.3.2"
-    "@eslint/eslintrc": "npm:^3.3.1"
-    "@eslint/js": "npm:^9.35.0"
-    "@react-native/babel-preset": "npm:0.83.0"
-    "@react-native/eslint-config": "npm:0.83.0"
-    "@release-it/conventional-changelog": "npm:^10.0.1"
-    "@types/jest": "npm:^29.5.14"
-    "@types/react": "npm:^19.2.0"
-    commitlint: "npm:^19.8.1"
-    del-cli: "npm:^6.0.0"
-    eslint: "npm:^9.35.0"
-    eslint-config-prettier: "npm:^10.1.8"
-    eslint-plugin-prettier: "npm:^5.5.4"
-    jest: "npm:^29.7.0"
-    lefthook: "npm:^2.0.3"
-    prettier: "npm:^2.8.8"
-    react: "npm:19.2.0"
-    react-native: "npm:0.83.0"
-    react-native-builder-bob: "npm:^0.40.17"
-    react-native-currency-input: "npm:^1.1.1"
-    react-native-safe-area-context: "npm:^5.6.2"
-    release-it: "npm:^19.0.4"
-    turbo: "npm:^2.5.6"
-    typescript: "npm:^5.9.2"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-    react-native-currency-input: ^3.0.0
-  peerDependenciesMeta:
-    react-native-currency-input:
-      optional: true
   languageName: unknown
   linkType: soft
 
@@ -10056,6 +10059,15 @@ __metadata:
     shell-quote: "npm:^1.6.1"
     ws: "npm:^7"
   checksum: 10c0/7ef95213d06ad4b294f5dca73736641e2d8ff46861d3deacdc56a143b27de60ac6310898a52c7efd9fbd1bdef20c09305d05be80e6beb560f0f975aad6afbc5e
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:^7.68.0":
+  version: 7.68.0
+  resolution: "react-hook-form@npm:7.68.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 10c0/5fb500fe60077185ab6de32a2371d05bf75ae335ef62993f0359dbb42bb0c95e0c28d4f7d70c4382995486c82715295c87fc44f2ced5de1ae353aa1f23398f47
   languageName: node
   linkType: hard
 

@@ -12,9 +12,10 @@ export const COLORS = {
   // Primary
   primary: '#3b82f6',
 
-  // Danger
+  // Danger / Error
   danger: '#E33D42',
   dangerLight: 'rgba(227, 61, 66, 0.1)',
+  error: '#ef4444',
 
   // Disabled
   disabled: '#e5e7eb',

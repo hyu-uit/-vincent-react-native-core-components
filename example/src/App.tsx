@@ -9,11 +9,19 @@ import {
   TextInput,
   SearchInput,
   CTabs,
+  FormField,
+  FormCheckbox,
+  FormNumberInput,
+  FormPasswordField,
+  FormSelect,
+  FormTextarea,
 } from '@vincent/react-native-core-components';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 export default function App() {
   const [checked, setChecked] = useState(false);
+  const { control } = useForm();
   return (
     <View style={styles.container}>
       <Avatar name="AAA" size={50} />
@@ -37,6 +45,18 @@ export default function App() {
         value="tab1"
         onChange={() => {}}
       />
+
+      <FormField name="name" control={control} label="Name" />
+      <FormCheckbox name="isAdmin" control={control} label="Is Admin" />
+      <FormNumberInput name="age" control={control} label="Age" />
+      <FormPasswordField name="password" control={control} label="Password" />
+      <FormSelect
+        name="role"
+        control={control}
+        label="Role"
+        onPress={() => {}}
+      />
+      <FormTextarea name="bio" control={control} label="Bio" />
     </View>
   );
 }
