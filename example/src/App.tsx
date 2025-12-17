@@ -9,14 +9,16 @@ import {
   TextInput,
   SearchInput,
   Tabs,
+} from '@vincent-hyu-uit/react-native-core-components/components';
+import {
   FormField,
   FormCheckbox,
   FormNumberInput,
   FormPasswordField,
   FormSelect,
   FormTextarea,
-  ThemeProvider,
-} from '@vincent-hyu-uit/react-native-core-components';
+} from '@vincent-hyu-uit/react-native-core-components/components/form';
+import { ThemeProvider } from '@vincent-hyu-uit/react-native-core-components/theme';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
