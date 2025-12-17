@@ -1,6 +1,31 @@
 # @vincent-hyu-uit/react-native-core-components
 
-A collection of customizable, pure React Native UI components for building beautiful mobile applications.
+📦 **Reusable Form Component Library for React Native**
+
+This library is a thoughtfully designed collection of reusable UI and form components for React Native applications, built with consistency, performance, and developer experience in mind.
+
+At its core, the library provides pure, presentation-focused components—such as TextInput, Checkbox, Switch, and Button—that are completely decoupled from business logic and form state. These components are lightweight, predictable, and easy to reuse across different projects and contexts.
+
+On top of these primitives, the library offers form-aware components powered by React Hook Form, delivering seamless integration with validation, error handling, and controlled inputs. By wrapping pure components with Controller, form components remain clean and declarative while benefiting from React Hook Form's high performance and minimal re-renders.
+
+## ✨ Key Principles
+
+**Separation of concerns**
+Pure UI components handle rendering only, while form components manage state and validation.
+
+**Performance-first**
+Built around React Hook Form to reduce unnecessary re-renders and keep forms fast.
+
+**Consistent UX**
+Shared styling, behavior, and error patterns across all inputs.
+
+**Type-safe & scalable**
+Designed with TypeScript-friendly APIs to support large-scale applications.
+
+**React Native–native**
+Optimized for mobile interactions, accessibility, and platform-specific behavior.
+
+This architecture enables teams to build complex forms faster, maintain a single source of truth for form behavior, and evolve UI components independently—resulting in cleaner code, better maintainability, and a more reliable user experience.
 
 ## Installation
 
